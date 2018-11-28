@@ -15,7 +15,7 @@ new P((resolve, reject) => {
 })
 .catch(err => {
   console.log('err: ', err)
-  return 'lero2'
+  return 'lero'
 })
 .then(name => {
   console.log('name: ',name)
@@ -28,7 +28,6 @@ new P((resolve, reject) => {
 // output: 
 // a:  a
 // b:  b
-// catched
 // err:  error
-// name:  lero2
+// name:  lero
 // c:  c
