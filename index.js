@@ -17,7 +17,11 @@ class P {
 
   constructor(fun) {
     this.state = 'pending';
-    fun(this.resolve.bind(this), this.reject.bind(this));
+    try {
+      fun(this.resolve.bind(this), this.reject.bind(this));
+    } catch (error) {
+      this.reject(error)
+    }
   }
 
   resolve(value) {
