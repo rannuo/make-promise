@@ -1,4 +1,4 @@
-const P = require('./index');
+const P = require('../index');
 
 new P((resolve, reject) => {
   setTimeout(() => {
