@@ -7,6 +7,49 @@ class P {
   static reject(error) {
     return new P((resolve, reject) => reject(error));
   }
+  /**
+   * 
+   * @param {P[]} ps 
+   */
+  static all(ps) {
+    if (ps.length <= 0) {
+      return P.resolve([])
+    }
+    return new P((resolve, reject) => {
+      const length = ps.length;
+      const result = new Array(length);
+      let count = 0;
+      let hasSettled = false;
+
+      function settle(v, i) {
+        if (!hasSettled) {
+          count++;
+          result[i] = v;
+          if (count === length) {
+            hasSettled = true;
+            resolve(result);
+          }
+        }
+      }
+      for (let i = 0; i < length; i++) {
+        const p = ps[i];
+        if (p instanceof P) {
+          p
+          .then(v => {
+            settle(v, i);
+          })
+          .catch(e => {
+            if (!hasSettled) {
+              hasSettled = true;
+              reject(e);
+            }
+          });
+        } else {
+          settle(p, i);
+        }
+      }
+    });
+  }
 
   /**
    * @type {'pending' | 'fulfilled' | 'rejected'}
