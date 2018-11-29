@@ -52,6 +52,32 @@ class P {
   }
 
   /**
+   * 
+   * @param {P[]} ps 
+   */
+  static race(ps) {
+    return new Promise((resolve, reject) => {
+      let settled = false;
+      function settle(v, rfunc) {
+        if (!settled) {
+          settled = true;
+          rfunc(v);
+        }
+      }
+      for (let i = 0, length = ps.length; i < length; i++) {
+        const p = ps[i];
+        p
+        .then(v => {
+          settle(v, resolve);
+        })
+        .catch(e => {
+          settle(e, reject);
+        });
+      }
+    })
+  }
+
+  /**
    * @type {'pending' | 'fulfilled' | 'rejected'}
    */
   // state;
