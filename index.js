@@ -184,6 +184,19 @@ class P {
       })
     }
   }
+
+  finally(fun) {
+    return this.then(
+      (v) => {
+        fun();
+        return v;
+      },
+      (e) => {
+        fun();
+        return P.reject(e);
+      }
+    )
+  }
 }
 
 module.exports = P;
