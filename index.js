@@ -12,8 +12,14 @@ class P {
    * @type {'pending' | 'fulfilled' | 'rejected'}
    */
   // state;
+  // 值
   // value;
+  // 错误
   // error;
+
+  // 两个回调
+  // thenFunc
+  // catchFunc
 
   constructor(fun) {
     this.state = 'pending';
